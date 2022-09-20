@@ -3,6 +3,7 @@ package com.imooc;
 //import com.imooc.aspect.OutSide;
 //import com.imooc.controller.HelloController;
 //import com.imooc.controller.HiController;
+import com.imooc.aspect.OutSide;
 import com.imooc.controller.HelloController;
 import com.imooc.controller.HiController;
 import com.imooc.controller.WelcomeController;
@@ -23,7 +24,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 @Configuration
 @EnableAspectJAutoProxy
-//@Import(OutSide.class)
+@Import(OutSide.class)
 @ComponentScan("com.imooc")
 public class Entrance {
 
@@ -109,6 +110,7 @@ public class Entrance {
 //		HiController hiController = (HiController)applicationContext.getBean("hiController");
 //		hiController.handleRequest();
 		((LittleUniverse)helloController).burningup();
-
+		OutSide outSide =(OutSide)applicationContext.getBean("com.imooc.aspect.OutSide");
+		outSide.say();
 	}
 }
