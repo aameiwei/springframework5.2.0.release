@@ -5,6 +5,9 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import javax.servlet.Filter;
 
+/**
+ * 实现无xml化的全注解springmvc配置
+ */
 public class StartWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	/**
 	 * SpringContext中相关的bean
@@ -31,6 +34,7 @@ public class StartWebApplicationInitializer extends AbstractAnnotationConfigDisp
 	 */
 	@Override
 	protected String[] getServletMappings(){
+		//这里表明所有的请求都会交由这个servlet来处理
 		return new String[]{"/"};
 	}
 	/**

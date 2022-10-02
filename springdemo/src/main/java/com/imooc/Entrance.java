@@ -12,7 +12,8 @@ import com.imooc.controller.WelcomeController;
 //import com.imooc.entity.factory.UserFactoryBean;
 import com.imooc.introduction.LittleUniverse;
 //import com.imooc.service.HelloService;
-//import com.imooc.service.HiService;
+import com.imooc.service.HelloService;
+import com.imooc.service.HiService;
 import com.imooc.dao.impl.BoyFriend;
 import com.imooc.dao.impl.Company;
 import com.imooc.entity.User;
@@ -102,7 +103,7 @@ public class Entrance {
 		//Company company = (Company)applicationContext.getBean("company");
 		//BoyFriend boyFriend = (BoyFriend)applicationContext.getBean("boyFriend");
 	}
-	public static void main(String[] args) {
+	public static void main5(String[] args) {
 		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Entrance.class);
 		System.out.println("**********AOP相关*************");
 		HelloController helloController = (HelloController)applicationContext.getBean("helloController");
@@ -112,5 +113,15 @@ public class Entrance {
 		((LittleUniverse)helloController).burningup();
 		OutSide outSide =(OutSide)applicationContext.getBean("com.imooc.aspect.OutSide");
 		outSide.say();
+	}
+
+	public static void main(String[] args) {
+		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Entrance.class);
+		System.out.println("**********AOP相关*************");
+		HiService hiService = (HiService) applicationContext.getBean("hiServiceImpl");
+		hiService.sayHi();
+		System.out.println("------------以下执行HelloService------------");
+		HelloService helloService = (HelloService) applicationContext.getBean("helloServiceImpl");
+		helloService.sayHello();
 	}
 }

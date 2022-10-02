@@ -531,6 +531,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		// 给容器refresh加锁，避免容器处在refresh阶段时，容器进行了初始化或者销毁的操作
 		synchronized (this.startupShutdownMonitor) {
 			// 调用容器准备刷新的方法，获取容器的当时时间，同时给容器设置同步标识，具体方法
+			/**
+			 * 初始化上下文环境，对系统的环境变量或者系统属性进行准备和校验，如环境变量中必须设置某个值才能运行，否则不能运行，
+			 * 这个时候可以在这里加这个校验，重写initPropertySources方法就好了。
+			 */
 			prepareRefresh();
 
 			//告诉子类启动refreshBeanFactory()方法，Bean定义资源文件的载入从
@@ -884,12 +888,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
 		// 初始化此容器的转换器
 		// 转换器的职责是处理通过配置给Bean实例成员变量赋值的时候的类型转换工作
+		// 为上下文初始化类型转换器
 		if (beanFactory.containsBean(CONVERSION_SERVICE_BEAN_NAME) &&
 				beanFactory.isTypeMatch(CONVERSION_SERVICE_BEAN_NAME, ConversionService.class)) {
 			beanFactory.setConversionService(
 					beanFactory.getBean(CONVERSION_SERVICE_BEAN_NAME, ConversionService.class));
 		}
 
+		// 检查上下文中是否存在类型转换器
 		// 如果没有注册过bean后置处理器post-processor，则注册默认的解析器
 		// (例如主要用于解析properties文件的PropertyPlaceholderConfigurer )
 		// @value注解或在xml中使用${}的方式进行环境相关的配置
